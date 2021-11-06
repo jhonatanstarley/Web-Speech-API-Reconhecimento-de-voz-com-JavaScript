@@ -57,7 +57,8 @@ window.addEventListener('DOMContentLoaded', function(){
           var resultado = transcricao_audio || interim_transcript;
           // Escrevo o resultado no campo da textarea
          document.getElementById('campo_texto').innerHTML = resultado;
-		 
+		 document.querySelector('#meu_campo').innerHTML = ""
+		 document.querySelector('#meu_campo').innerHTML = "TRANSCRIÇÃO DO AUDIO" + " - " + resultado.length + " caracteres."
       }
 
     };
@@ -116,12 +117,12 @@ $(function(){
 					document.querySelector('#audio').innerHTML = ""
 					$('#audio').append(audio)
 					document.querySelector('#campo_base64').value = ""
-					document.querySelector('#campo_base').innerHTML = document.querySelector('#campo_base').innerHTML + " - " + reader.result.length + " caracteres"
+					document.querySelector('#campo_base').innerHTML = document.querySelector('#campo_base').innerHTML + " - " + reader.result.length + " caracteres."
 					document.querySelector('#campo_base64').value = reader.result
 				}
 			}
 		}, err => {
-			$('label').append('<p style="color:red;text-align:center"><b>Você deve permitir o áudio</b></p>')
+			$('label').append('<p style="color:red;text-align:center"><b>Você deve permitir o áudio!</b></p>')
 		})
 		$('#btn_gravar_audio').click(function(){
 			if($(this).text() === 'Iniciar Gravação') {
