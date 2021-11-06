@@ -10,7 +10,7 @@ Essa parte do projeto é baseada no vídeo do Túlio do canal DevPleno - Link do
 Ezec Tech no vídeo https://www.youtube.com/watch?v=C32CJ9IHIgE
 Caso tenha problemas ou não encontre o dispositivo, siga as instruções desse vídeo https://www.youtube.com/watch?v=Ur9WUNh94YA
 
-OBS: Caso não consiga habilitar o Mixagem estéreo no seu computador, utilze o VoiceMetter baixando pelo link https://vb-audio.com/Voicemeeter/index.htm
+OBS: Caso não consiga habilitar o Mixagem estéreo no seu computador, utilize o VoiceMetter baixando pelo link https://vb-audio.com/Voicemeeter/index.htm
 
 Créditos aos citados acima.
 Modificado por Jhonatan S.C
