@@ -116,6 +116,7 @@ $(function(){
 					document.querySelector('#audio').innerHTML = ""
 					$('#audio').append(audio)
 					document.querySelector('#campo_base64').value = ""
+					document.querySelector('#campo_base').innerHTML = document.querySelector('#campo_base').innerHTML + " - " + reader.result.length + " caracteres"
 					document.querySelector('#campo_base64').value = reader.result
 				}
 			}
