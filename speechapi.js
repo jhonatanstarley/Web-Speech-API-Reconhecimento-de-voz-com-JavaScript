@@ -25,7 +25,7 @@ window.addEventListener('DOMContentLoaded', function(){
     // e modificar o texto do botão
     recebe_audio.onstart = function(){
       esta_gravando = true;
-      btn_gravacao.innerHTML = 'Gravando! Parar gravação.';
+      btn_gravacao.innerHTML = 'Parar gravação!';
     };
      // uso o metodo onend para setar a minha variavel esta_gravando como false
     // e modificar o texto do botão
@@ -57,6 +57,7 @@ window.addEventListener('DOMContentLoaded', function(){
           var resultado = transcricao_audio || interim_transcript;
           // Escrevo o resultado no campo da textarea
          document.getElementById('campo_texto').innerHTML = resultado;
+		 
       }
 
     };
@@ -81,3 +82,53 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 
 }, false);
+
+$(function(){
+			
+	let mediaRecorder
+
+	navigator
+		.mediaDevices
+		.getUserMedia({ audio: true})
+		.then( stream => {
+			mediaRecorder = new MediaRecorder(stream)
+			let chunks = []
+			mediaRecorder.ondataavailable = data =>{
+				chunks.push(data.data)
+			}
+			//A função abaixo quando habilitada grava um áudio novo toda vez que clicar em Iniciar Gravação.
+			//Se comentar ela, o sistema irá gerar um arquivo como se você estivesse pausando e continuando a gravação
+			//Como se fosse uma continuidade da gravação anterior. O Buffer aumentará gradualmente com as gravações.
+			mediaRecorder.onstart = () => {
+					    chunks = []
+					    console.log(chunks, stream)
+					}
+			
+			mediaRecorder.onstop = () => {
+				const blob = new Blob(chunks, { type: 'audio/ogg; code=opus' })
+				const reader = new window.FileReader()
+				reader.readAsDataURL(blob)
+				reader.onloadend = () => {
+					const audio = document.createElement('audio')
+					console.log(reader.result)
+					audio.src = reader.result
+					audio.controls = true
+					document.querySelector('#audio').innerHTML = ""
+					$('#audio').append(audio)
+					document.querySelector('#campo_base64').value = ""
+					document.querySelector('#campo_base64').value = reader.result
+				}
+			}
+		}, err => {
+			$('label').append('<p style="color:red;text-align:center"><b>Você deve permitir o áudio</b></p>')
+		})
+		$('#btn_gravar_audio').click(function(){
+			if($(this).text() === 'Iniciar Gravação') {
+				mediaRecorder.start()
+				$(this).text('Parar gravação!')
+			}else{
+				mediaRecorder.stop()
+				$(this).text('Iniciar Gravação')
+			}
+		})
+})

@@ -15,32 +15,36 @@
       <![endif]-->
    </head>
    <body>
-      <div class="container">
-         <div class="row" style="height:10px">
+		<div class="container">
+        <div class="row" style="height:10px">
             <div id="" class="col-xs-12">&nbsp;</div>
-         </div>
+        </div>
          <!-- LINHA SEPARADORA-->
          <div class="row">
             <div class="col-md-12">
-               <div class="panel panel-default">
+				<div class="panel panel-default">
                   <div class="panel-heading">
                      <h1>Web Speech API – Reconhecimento de voz com JavaScript</h1>
                   </div>
-                  <div class="panel-body">
+					<div class="panel-body">
                      <div class="row">
                         <div class="col-md-12">
                            <form action="">
                               <div class="form-group">
-                                 <label for="meu_campo">RECEBER AUDIO</label>
+                                 <label for="meu_campo">TRANSCRIÇÃO DO AUDIO</label>
                               </div>
 
                               <div class="form-group">
                                 <textarea class="form-control" rows="3" id="campo_texto"></textarea>
                               </div>
-
-
+							  <div class="form-group">
+                                 <label for="meu_campo">AUDIO EM BASE64</label>
+                              </div>
+							  <div class="form-group">
+                                <textarea class="form-control" rows="3" id="campo_base64"></textarea>
+                              </div>
                            </form>
-                           <button class="btn btn-success btn-lg pull-right" id="btn_gravar_audio">Gravar Audio</button>
+                           <button class="btn btn-success btn-lg pull-right" id="btn_gravar_audio">Iniciar Gravação</button>
                         </div>
                         <div class="row" style="height:10px">
                            <div id="" class="col-xs-12">
@@ -49,24 +53,44 @@
                         </div>
                         <!-- LINHA SEPARADORA-->
                         <div class="col-md-12">
-                        <img src="assets/images/logo-01.png" alt="Códigos & Café - Agência Digital e Teninamentos Web" class="img-responsive pull-right" >
-                
+						<div class=""><p>O áudio será disponibilizado aqui após o termino da gravação!</p></div>
+						<div class="container" id="audio"></div>
+                        <img src="assets/images/logo-00.png" alt="Modified by Jhonatan S.C" class="img-responsive pull-right" >
                         </div>
-                     </div>
+					</div>
                      <!-- /.row final linha -->
-                  </div>
-               </div>
+					</div>
+				</div>
             </div>
-         </div>
+        </div>
          <!-- /.row final linha -->
       </div>
 
 
-      
+  
       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
       <!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 		<script src="speechapi.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+		
+		<footer class="page-footer" style="center">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text"></h5>
+                <p class="grey-text text-lighten-4"></p>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © 2021 Copyright - Modified by Jhonatan S.C.
+            <a class="grey-text text-lighten-4 right" href="#!"></a>
+            </div>	
+          </div>
+        </footer>
+		
    </body>
 </html>
