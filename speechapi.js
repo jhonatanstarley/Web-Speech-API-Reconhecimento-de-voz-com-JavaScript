@@ -26,12 +26,14 @@ window.addEventListener('DOMContentLoaded', function(){
     recebe_audio.onstart = function(){
       esta_gravando = true;
       btn_gravacao.innerHTML = 'Parar Transcrição!';
+	  document.getElementById('btn_gravar_audio').className = "btn btn-lg btn-danger btn-lg pull-right";
     };
      // uso o metodo onend para setar a minha variavel esta_gravando como false
     // e modificar o texto do botão
     recebe_audio.onend = function(){
       esta_gravando = false;
       btn_gravacao.innerHTML = 'Iniciar Transcrição';
+	  document.getElementById('btn_gravar_audio').className = "btn btn-lg btn-success btn-lg pull-right";
     };
 
 
