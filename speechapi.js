@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', function(){
     recebe_audio.onstart = function(){
       esta_gravando = true;
       btn_gravacao.innerHTML = 'Parar Transcrição!';
-	  document.getElementById('btn_gravar_audio').className = "btn btn-lg btn-danger btn-lg pull-right";
+	  document.getElementById('btn_gravar_audio').className = "btn btn-lg btn-danger btn-lg pull-right";  
     };
      // uso o metodo onend para setar a minha variavel esta_gravando como false
     // e modificar o texto do botão
@@ -34,8 +34,8 @@ window.addEventListener('DOMContentLoaded', function(){
       esta_gravando = false;
       btn_gravacao.innerHTML = 'Iniciar Transcrição';
 	  document.getElementById('btn_gravar_audio').className = "btn btn-lg btn-success btn-lg pull-right";
+	  
     };
-
 
     recebe_audio.onerror = function(event){
       console.log(event.error);
@@ -44,25 +44,24 @@ window.addEventListener('DOMContentLoaded', function(){
     // Com o metodo onresult posso capturar a transcrição do resultado 
     recebe_audio.onresult = function(event){
       // Defino a minha variavel interim_transcript como vazia
-      var interim_transcript = '';
-      // Utilizo o for para contatenar os resultados da transcrição 
-      for(var i = event.resultIndex; i < event.results.length; i++){
-           // verifico se o parametro isFinal esta setado como true com isso identico se é o final captura
-          if(event.results[i].isFinal){
-            // Contateno o resultado final da transcrição
-            transcricao_audio += event.results[i][0].transcript;
-          }else{
-            // caso ainda não seja o resultado final vou contatenado os resultados obtidos
-            interim_transcript += event.results[i][0].transcript;
-          }
-          // Verifico qual das variaveis não esta vazia e atribuo ela no variavel resultado
-          var resultado = transcricao_audio || interim_transcript;
-          // Escrevo o resultado no campo da textarea
-         document.getElementById('campo_texto').innerHTML = resultado;
-		 document.querySelector('#meu_campo').innerHTML = ""
-		 document.querySelector('#meu_campo').innerHTML = "TRANSCRIÇÃO DO AUDIO" + " - " + resultado.length + " caracteres."
-      }
-
+		var interim_transcript = '';
+		// Utilizo o for para contatenar os resultados da transcrição 
+		for(var i = event.resultIndex; i < event.results.length; i++){
+			// verifico se o parametro isFinal esta setado como true com isso identico se é o final captura
+			if(event.results[i].isFinal){
+				// Contateno o resultado final da transcrição
+				transcricao_audio += event.results[i][0].transcript;
+			}else{
+				// caso ainda não seja o resultado final vou contatenado os resultados obtidos
+				interim_transcript += event.results[i][0].transcript;
+			}
+			// Verifico qual das variaveis não esta vazia e atribuo ela no variavel resultado
+			var resultado = transcricao_audio || interim_transcript;
+			// Escrevo o resultado no campo da textarea
+			document.getElementById('campo_texto').innerHTML = resultado;
+			document.querySelector('#meu_campo').innerHTML = ""
+			document.querySelector('#meu_campo').innerHTML = "TRANSCRIÇÃO DO AUDIO" + " - " + resultado.length + " caracteres."
+		}	
     };
     // Capturamos a ação do click no botão e iniciamos a gravação ou a paramos
     // dependendo da variavel de controle esta_gravando
@@ -81,7 +80,7 @@ window.addEventListener('DOMContentLoaded', function(){
   }else{
     // Caso não o navegador não apresente suporte ao Speech API apresentamos a seguinte mensagem
     console.log('navegador não apresenta suporte a web speech api');
-    // alert('Este navegador não apresenta suporte para essa funcionalidade ainda');
+    alert('Este navegador não apresenta suporte ao Web Speech API ainda');
   }
 
 }, false);

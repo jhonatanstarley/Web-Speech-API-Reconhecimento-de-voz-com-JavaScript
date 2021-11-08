@@ -15,6 +15,12 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
+	  <script>
+		function botaoHandler(event){
+			event.preventDefault()
+			console.log("Botão Clicado!")
+			}
+	  </script>
 	</head>
 	<body>
 		<div class="container">
@@ -64,7 +70,7 @@
 											<textarea class="form-control" rows="3" id="campo_base64"></textarea>
 										</div>-->
 									</form>
-									<button class="btn btn-success btn-lg pull-right" id="btn_gravar_audio">Iniciar Transcrição</button>
+									<button type="button" class="btn btn-success btn-lg pull-right" id="btn_gravar_audio">Iniciar Transcrição</button>
 								</div>
 								<div class="row" style="height:10px">
 									<div id="" class="col-xs-12">
