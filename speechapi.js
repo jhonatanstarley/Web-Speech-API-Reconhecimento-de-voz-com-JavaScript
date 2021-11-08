@@ -23,8 +23,9 @@ window.addEventListener('DOMContentLoaded', function(){
     recebe_audio.lang = "pt-BR";
     // uso o metodo onstart para setar a minha variavel esta_gravando como true
     // e modificar o texto do botão
-    recebe_audio.onstart = function(){
+    recebe_audio.onstart = function x(){
       esta_gravando = true;
+	  //alert('Atenção!\n\nPara cada nova transcrição de um cliente diferente, atualize a página!')
       btn_gravacao.innerHTML = 'Parar Transcrição!';
 	  document.getElementById('btn_gravar_audio').className = "btn btn-lg btn-danger btn-lg pull-right";  
     };
@@ -38,8 +39,15 @@ window.addEventListener('DOMContentLoaded', function(){
     };
 
     recebe_audio.onerror = function(event){
+	  //alert(event.error + '\n\nTenha certeza que está recebendo o áudio.\nClique em "Inciar Transcrição!" Novamente!');
       console.log(event.error);
-    };
+	  setTimeout(function() {
+	  //A API tem tempo limite de 18 segundos para receber o áudio antes que dê erro de no-speech que é
+	  //sem recebimento de áudio para transcrição. Essa função de setTimeout faz com que ela clique 
+	  //reduzindo o tempo de re-clique  no botão.
+	  document.querySelector('button').click();
+	  }, 1000)
+	};
     
     // Com o metodo onresult posso capturar a transcrição do resultado 
     recebe_audio.onresult = function(event){
