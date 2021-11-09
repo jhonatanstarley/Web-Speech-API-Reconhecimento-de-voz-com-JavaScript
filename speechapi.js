@@ -2,7 +2,7 @@
 window.addEventListener('DOMContentLoaded', function(){
   // Instanciamos o nosso botão
   var btn_gravacao = document.querySelector('#btn_gravar_audio');
-  // Crio a variavel que amarzenara a transcrição do audio
+  // Crio a variavel que armazenará a transcrição do audio
   var transcricao_audio =  '';
   // Seto o valor false para a variavel esta_gravando para fazermos a validação se iniciou a gravação
   var esta_gravando = false;
@@ -11,42 +11,67 @@ window.addEventListener('DOMContentLoaded', function(){
     // Como não sabemos qual biblioteca usada pelo navegador 
     // Atribuimos a api retornada pelo navegador
     var speech_api = window.SpeechRecognition || window.webkitSpeechRecognition;
-     // Criamos um novo objeto com a API Speech
-    var recebe_audio = new speech_api();
+    // Criamos um novo objeto com a API Speech
+    const recebe_audio = new speech_api();
     // Defino se a gravação sera continua ou não
     // Caso deixamos ela definida como false a gravação tera um tempo estimado 
     // de 4 a 5 segundos
     recebe_audio.continuous = true;
+	
+	// Frase para iniciar o processamento principal
+	//recebe_audio.startphrase = 'Ei web';
+	
     // Especifico se o resultado final pode ser alterado ou não pela compreenção da api
     recebe_audio.interimResults = true;
     // Especifico o idioma utilizado pelo usuario
     recebe_audio.lang = "pt-BR";
-    // uso o metodo onstart para setar a minha variavel esta_gravando como true
+	
+	//recebe_audio.start();
+	
+    // Uso o metodo onstart para setar a minha variavel esta_gravando como true
     // e modificar o texto do botão
-    recebe_audio.onstart = function x(){
-      esta_gravando = true;
-	  //alert('Atenção!\n\nPara cada nova transcrição de um cliente diferente, atualize a página!')
-      btn_gravacao.innerHTML = 'Parar Transcrição!';
-	  document.getElementById('btn_gravar_audio').className = "btn btn-lg btn-danger btn-lg pull-right";  
+    recebe_audio.onstart = function(){
+	  if(document.querySelector('p#error') == null){
+		esta_gravando = true;
+		// alert('Atenção!\n\nPara cada nova transcrição de um cliente diferente, atualize a página!')
+		btn_gravacao.innerHTML = 'Parar Transcrição!';
+		document.getElementById('btn_gravar_audio').className = "btn btn-lg btn-danger btn-lg pull-right"; 
+	  }else{
+		esta_gravando = true;
+		// alert('Atenção!\n\nPara cada nova transcrição de um cliente diferente, atualize a página!')
+		btn_gravacao.innerHTML = 'Parar Transcrição!';
+		document.getElementById('btn_gravar_audio').className = "btn btn-lg btn-danger btn-lg pull-right"; 
+		document.querySelector('p#error').remove();
+	  }
     };
-     // uso o metodo onend para setar a minha variavel esta_gravando como false
+    // Uso o metodo onend para setar a minha variavel esta_gravando como false
     // e modificar o texto do botão
     recebe_audio.onend = function(){
-      esta_gravando = false;
-      btn_gravacao.innerHTML = 'Iniciar Transcrição';
-	  document.getElementById('btn_gravar_audio').className = "btn btn-lg btn-success btn-lg pull-right";
-	  
+	    esta_gravando = false;
+		btn_gravacao.innerHTML = 'Iniciar Transcrição';
+		document.getElementById('btn_gravar_audio').className = "btn btn-lg btn-success btn-lg pull-right";
     };
 
     recebe_audio.onerror = function(event){
 	  //alert(event.error + '\n\nTenha certeza que está recebendo o áudio.\nClique em "Inciar Transcrição!" Novamente!');
       console.log(event.error);
-	  setTimeout(function() {
-	  //A API tem tempo limite de 18 segundos para receber o áudio antes que dê erro de no-speech que é
-	  //sem recebimento de áudio para transcrição. Essa função de setTimeout faz com que ela clique 
-	  //reduzindo o tempo de re-clique  no botão.
-	  document.querySelector('button').click();
-	  }, 1000)
+	  var dsErro = event.error ;
+	  var dsAlert = dsErro == "no-speech" ? 'O usuário não está permitindo que qualquer entrada de fala ocorra por razões de segurança, privacidade ou preferência do usuário.\nPara continuar conceda a permissão!' : dsErro == "aborted" ? 'A entrada de fala foi abortada de alguma forma, talvez por algum comportamento específico do usuário-agente, como a INTERFACE DO USUÁRIO, que permite que o usuário cancele a entrada da fala.' : dsErro == "audio-capture" ? 'Falha na captura de áudio.' : dsErro == "network" ? 'Alguma comunicação de rede necessária para completar o reconhecimento falhou.' : dsErro == "not-allowed" ? 'O agente do usuário não está permitindo que qualquer entrada de fala ocorra por razões de segurança, privacidade ou preferência do usuário.' : dsErro == "service-not-allowed" ? 'O agente do usuário não está permitindo que o serviço de fala solicitado pelo aplicativo web, mas permitiria que algum serviço de fala, fosse usado ou porque o agente do usuário não suporta o selecionado ou por razões de segurança, privacidade ou preferência do usuário.' : dsErro == "bad-grammar" ? 'Houve um erro na gramática de reconhecimento de fala ou tags semânticas, ou o formato de gramática ou formato de tag semântica não é suportado.' : dsErro == "language-not-supported" ? 'A linguagem não  suportada.' : "";
+	  alert(dsAlert);
+	  if(event.error == 'not-allowed'){
+		if(document.querySelector('p#error') == null){
+			$('label#meu_campo').append('<p id="error" style="color:red;text-align:center"><b>Você deve permitir o áudio!</b></p>')
+		}else{
+			console.log(event.error);
+		}
+	  }else{
+		  setTimeout(function() {
+		  //A API tem tempo limite de 18 segundos para receber o áudio antes que dê erro de no-speech que é
+		  //sem recebimento de áudio para transcrição. Essa função de setTimeout faz com que ela clique 
+		  //reduzindo o tempo de re-clique  no botão.
+		  document.querySelector('button').click();
+		  }, 0500)
+	  }
 	};
     
     // Com o metodo onresult posso capturar a transcrição do resultado 
@@ -95,6 +120,9 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
 
+//Função para habilitar a gravação do áudio
+//E ter o áudio como retorno num arquivo
+//Para habilitar remova a marcação de comentário!
 
 //$(function(){
 //			
@@ -160,3 +188,4 @@ window.addEventListener('DOMContentLoaded', function(){
 //	//Alert('Caso deseje obter a gravação/nAtualize a págine e marque "Sim"!')
 //	//}
 //})
+
