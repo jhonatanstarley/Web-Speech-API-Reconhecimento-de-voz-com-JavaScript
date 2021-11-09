@@ -25,12 +25,14 @@ window.addEventListener('DOMContentLoaded', function(){
     recebe_audio.interimResults = true;
     // Especifico o idioma utilizado pelo usuario
     recebe_audio.lang = "pt-BR";
-	
+	qtStart = 0;
 	//recebe_audio.start();
 	
     // Uso o metodo onstart para setar a minha variavel esta_gravando como true
     // e modificar o texto do botão
     recebe_audio.onstart = function(){
+		qtStart = qtStart + 1;
+		console.log(qtStart);
 	  if(document.querySelector('p#error') == null){
 		esta_gravando = true;
 		// alert('Atenção!\n\nPara cada nova transcrição de um cliente diferente, atualize a página!')
@@ -57,7 +59,11 @@ window.addEventListener('DOMContentLoaded', function(){
       console.log(event.error);
 	  var dsErro = event.error ;
 	  var dsAlert = dsErro == "aborted" ? 'A entrada de fala foi abortada de alguma forma, talvez por algum comportamento específico do usuário-agente, como a INTERFACE DO USUÁRIO, que permite que o usuário cancele a entrada da fala.' : dsErro == "audio-capture" ? 'Falha na captura de áudio.' : dsErro == "network" ? 'Alguma comunicação de rede necessária para completar o reconhecimento falhou.' : dsErro == "not-allowed" ? 'O agente do usuário não está permitindo que qualquer entrada de fala ocorra por razões de segurança, privacidade ou preferência do usuário.' : dsErro == "service-not-allowed" ? 'O agente do usuário não está permitindo que o serviço de fala solicitado pelo aplicativo web, mas permitiria que algum serviço de fala, fosse usado ou porque o agente do usuário não suporta o selecionado ou por razões de segurança, privacidade ou preferência do usuário.' : dsErro == "bad-grammar" ? 'Houve um erro na gramática de reconhecimento de fala ou tags semânticas, ou o formato de gramática ou formato de tag semântica não é suportado.' : dsErro == "language-not-supported" ? 'A linguagem não  suportada.' : ""; //(A tratativa desse erro está sendo clicar no botão novamente para iniciar automáticamente a captura do áudio)dsErro == "no-speech" ? 'O usuário não está permitindo que qualquer entrada de fala ocorra por razões de segurança, privacidade ou preferência do usuário.\nPara continuar conceda a permissão!' : 
-	  alert(dsAlert);
+	  if(dsAlert != ""){
+		  alert(dsAlert);
+	  }else{
+		  console.log(dsAlert);
+	  }
 	  if(event.error == 'not-allowed'){
 		if(document.querySelector('p#error') == null){
 			$('label#meu_campo').append('<p id="error" style="color:red;text-align:center"><b>Você deve permitir o áudio!</b></p>')
