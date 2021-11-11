@@ -1,4 +1,4 @@
-// Fazemos que o código só funcione apos o carregamento completo da pagina
+// Fazemos que o código só funcione após o carregamento completo da página
 window.addEventListener('DOMContentLoaded', function(){
   // Instanciamos o nosso botão
   var btn_gravacao = document.querySelector('#btn_gravar_audio');
@@ -61,12 +61,10 @@ window.addEventListener('DOMContentLoaded', function(){
 	  var dsAlert = dsErro == "aborted" ? 'A entrada de fala foi abortada de alguma forma, talvez por algum comportamento específico do usuário-agente, como a INTERFACE DO USUÁRIO, que permite que o usuário cancele a entrada da fala.' : dsErro == "audio-capture" ? 'Falha na captura de áudio.' : dsErro == "network" ? 'Alguma comunicação de rede necessária para completar o reconhecimento falhou.' : dsErro == "not-allowed" ? 'O agente do usuário não está permitindo que qualquer entrada de fala ocorra por razões de segurança, privacidade ou preferência do usuário.' : dsErro == "service-not-allowed" ? 'O agente do usuário não está permitindo que o serviço de fala solicitado pelo aplicativo web, mas permitiria que algum serviço de fala, fosse usado ou porque o agente do usuário não suporta o selecionado ou por razões de segurança, privacidade ou preferência do usuário.' : dsErro == "bad-grammar" ? 'Houve um erro na gramática de reconhecimento de fala ou tags semânticas, ou o formato de gramática ou formato de tag semântica não é suportado.' : dsErro == "language-not-supported" ? 'A linguagem não  suportada.' : ""; //(A tratativa desse erro está sendo clicar no botão novamente para iniciar automáticamente a captura do áudio)dsErro == "no-speech" ? 'O usuário não está permitindo que qualquer entrada de fala ocorra por razões de segurança, privacidade ou preferência do usuário.\nPara continuar conceda a permissão!' : 
 	  if(dsAlert != ""){
 		  alert(dsAlert);
-	  }else{
-		  console.log(dsAlert);
 	  }
 	  if(event.error == 'not-allowed'){
 		if(document.querySelector('p#error') == null){
-			$('label#meu_campo').append('<p id="error" style="color:red;text-align:center"><b>Você deve permitir o áudio!</b></p>')
+			$('label#meu_campo').append('<p id="error" style="color:red;text-align:center"><b>Você deve permitir o áudio!</b></p>');
 		}else{
 			console.log(event.error);
 		}
@@ -98,8 +96,8 @@ window.addEventListener('DOMContentLoaded', function(){
 			var resultado = transcricao_audio || interim_transcript;
 			// Escrevo o resultado no campo da textarea
 			document.getElementById('campo_texto').innerHTML = resultado;
-			document.querySelector('#meu_campo').innerHTML = ""
-			document.querySelector('#meu_campo').innerHTML = "TRANSCRIÇÃO DO AUDIO" + " - " + resultado.length + " caracteres."
+			document.querySelector('#meu_campo').innerHTML = "";
+			document.querySelector('#meu_campo').innerHTML = "TRANSCRIÇÃO DO AUDIO" + " - " + resultado.length + " caracteres.";
 		}	
     };
     // Capturamos a ação do click no botão e iniciamos a gravação ou a paramos
